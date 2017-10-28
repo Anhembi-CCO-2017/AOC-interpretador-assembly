@@ -44,17 +44,21 @@ public class Equacao {
             for (int j = 0; j < vetor.length; j++){
                 if (valor.charAt(0) == vetor[j] || valor.charAt(valor.length() - 1) == vetor[j]){
                     return false;
-                }m
+                }
             }
+            splitEquation(valor.replaceAll(" ",""));
             return true;
         }
         
         return false;
     }
-//    
-//    public String[][] splitEquation(){
-//        []
-//    }
+    
+    public String[][] splitEquation(String valor){
+        String[][] name = new String[3][3];
+        
+        
+        return name;
+    }
     
     
 }
