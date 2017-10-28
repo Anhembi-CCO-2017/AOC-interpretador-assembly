@@ -1,8 +1,6 @@
-
 package calculadora;
-
 public class Interpretador {
-
+    
     public String valor_digitado;
     private String valor_convertido;
     private String operacao;

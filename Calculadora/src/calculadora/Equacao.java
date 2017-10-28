@@ -135,6 +135,12 @@ public class Equacao {
         
         return result;
     }
-    
-    
+   
+    //Gera letras do alfabeto aleatórias
+    public char rndChar () {
+        
+        int rnd = (int) (Math.random() * 52);
+        char base = (rnd < 26) ? 'A' : 'a';
+        return (char) (base + rnd % 26);
+    }
 }
