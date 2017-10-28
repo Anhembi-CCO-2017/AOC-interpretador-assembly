@@ -47,9 +47,12 @@ public class Assembly {
                     if(matcher.group(1).toUpperCase() != "MOVE")
                         return false;                           
                         
-                 matriz_operacao[i][0]=matcher.group(1);
-                 matriz_operacao[i][1]=matcher.group(2);
-                 matriz_operacao[i][2]=matcher.group(3);
+                 if(matcher.group(2).toUpperCase() == matcher.group(3).toUpperCase())
+                     return false;
+                 
+                 matriz_operacao[i][0]=matcher.group(1).toUpperCase();
+                 matriz_operacao[i][1]=matcher.group(2).toUpperCase();
+                 matriz_operacao[i][2]=matcher.group(3).toUpperCase();
             } else
                 return false;
         }
