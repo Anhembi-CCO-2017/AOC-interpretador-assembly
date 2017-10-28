@@ -11,7 +11,6 @@ public class Calculadora {
         
         // entrada de dados
         JTextArea msg = new JTextArea("");
-        
         msg.setLineWrap(true); //quebrar linhas
         msg.setRows(10); //numero de linhas
         msg.setColumns(10); //numero de colunas
@@ -26,8 +25,8 @@ public class Calculadora {
         String valor = msg.getText();
         
         // Validar a expressão        
-        IdentificarExpressao ie = new IdentificarExpressao();
-               
+        Interpretador ie = new Interpretador(valor);
+        
         
     }
     
