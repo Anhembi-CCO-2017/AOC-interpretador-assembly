@@ -15,10 +15,7 @@ public class Equacao {
             for (int j = 0; j < vetor.length; j++) 
                 if (valor.charAt(i) == vetor[j])
                         return true;
-            
-            
-        
-        
+   
         return false;
     }
     
