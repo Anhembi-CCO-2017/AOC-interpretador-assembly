@@ -19,6 +19,12 @@ public class IdentificarExpressao {
     }
     
     public boolean isEquacao(String valor){
+        Equacao eq = new Equacao();
+        
+        if (eq.isEquacao(valor)) {
+            
+          return true;  
+        }
         return false;
     }
 }
