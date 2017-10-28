@@ -1,6 +1,7 @@
 
 package calculadora;
 
+import com.sun.xml.internal.ws.util.StringUtils;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -38,23 +39,49 @@ public class Equacao {
             }
         }
         
+        int qtdaberto=0;
+        int qtdfechado=0;
+        
+        for (int i = 0; i < valor.length(); i++) {
+            
+            if (valor.charAt(i) == '(') {
+                
+                qtdaberto ++;
+            }
+            if (valor.charAt(i) == ')') {
+                
+                qtdfechado ++;
+            }
+        }
+        
+        if (qtdaberto != qtdfechado) {
+            
+            return false;
+        }
+        
         // checar se tem  tem formula
         if (matcher1.find()) {
             //saber se a formula é no final
             for (int j = 0; j < vetor.length; j++){
                 if (valor.charAt(0) == vetor[j] || valor.charAt(valor.length() - 1) == vetor[j]){
                     return false;
-                }m
+                }
             }
+            splitEquation(valor.replaceAll(" ",""));
             return true;
         }
         
+        
+        
         return false;
     }
-//    
-//    public String[][] splitEquation(){
-//        []
-//    }
+    
+    public String[][] splitEquation(String valor){
+        String[][] name = new String[3][3];
+        
+        
+        return name;
+    }
     
     
 }
