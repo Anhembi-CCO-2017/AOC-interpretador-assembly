@@ -1,6 +1,7 @@
 
 package calculadora;
 
+import com.sun.xml.internal.ws.util.StringUtils;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -38,9 +39,26 @@ public class Equacao {
             }
         }
         
+        
+        for (int i = 0; i < valor.length(); i++) {
+            for (int j = 0; j < vetor.length; j++) {
+                if (valor.charAt(i) == vetor[j]) {
+                    for (int k = 0; k < vetor.length; k++) 
+                        if (valor.charAt(i+1) == vetor[k]) 
+                            return false;
+            }
+           }
+        }
+        
+        
+        
+        
+        
+        
         int qtdaberto=0;
         int qtdfechado=0;
         
+        //verifica se tem os mesmos numeros de parenteses!
         for (int i = 0; i < valor.length(); i++) {
             
             if (valor.charAt(i) == '(') {
@@ -66,7 +84,6 @@ public class Equacao {
                     return false;
                 }
             }
-            splitEquation(valor.replaceAll(" ",""));
             return true;
         }
         
@@ -87,6 +104,7 @@ public class Equacao {
         
         return name;
     }
+
     
     
 }
