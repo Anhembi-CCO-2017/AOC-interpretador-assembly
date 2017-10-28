@@ -1,6 +1,7 @@
 
 package calculadora;
 
+import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -92,18 +93,48 @@ public class Equacao {
         return false;
     }
     
-    public String[][] splitEquation(String valor){
-        String[][] name = new String[3][3];
-        Pattern pattern = Pattern.compile("((\\d*\\.\\d+)|(\\d+)|([\\+\\-\\*/\\(\\)]))");
-        Matcher m = pattern.matcher(valor);
-        
-        while (m.find()) {
-            System.out.printf("%s ", m.group());
-        }
-        
-        return name;
-    }
+    public String splitEquation(String valor){
+        String result = ""; 
+ 
+        for (int i = 0; i < valor.length(); i++) {
+            
+            switch(valor.charAt(i)){
+                
+                case '(':
+                    if(i == 0){
+                        result += "MOVE ";
+                    }
+                    break;
+                case ')':
+                    result += "MOVE ";
+                    break;
+                    
+                case '+':
+                    result += "ADD ";
+                    break;
+                case '-':
+                    result += "SUB ";
 
+                    break;
+                case '/':
+                    result += "DIV ";
+                    break;
+                case '*':
+                    result += "MPY ";
+                    break;
+                default:
+                    if (i == 0) {
+                        result += "MOVE "+valor.charAt(i)+"\n";
+                    }else {
+                        result += valor.charAt(i) + "\n";
+                    }
+                    
+            }
+        }
+        System.out.println(result);
+        
+        return result;
+    }
     
     
 }
