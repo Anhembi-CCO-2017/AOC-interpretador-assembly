@@ -9,6 +9,10 @@ package calculadora;
  *
  * @author Matheus
  */
-public class Equacao {
+public class Assembly {
+
+    public Assembly() {
+    
+    }
     
 }
