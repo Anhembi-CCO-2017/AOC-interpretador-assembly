@@ -1,5 +1,8 @@
 package calculadora;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /* v1: /(MOV|ADD|SUB|MPY|DIV) (\w),(\w)/g  $1 $2 != $3
  * REGEX DE VALIDAÇÃO
  * Primeiro identificar se existe caracteres especiais. [$&+:;=?!@#|]
@@ -28,17 +31,30 @@ public class Assembly {
     }
 
     public boolean isAssembly(String valor) {
-
+        Pattern regex1 = Pattern.compile("[$&:;=?!@#|]");
+        Matcher matcher1 = regex1.matcher(valor);
+        if(matcher1.find())
+            return false;
+        
+        String linha[] = valor.split("\n");
+            
         //Reconhecimento de pattern POR LINHA
-        Pattern pattern = Pattern.compile("(MOV|ADD|SUB|MPY|DIV) (\w),(\w)");
-        Matcher matcher = pattern.matcher(linha[i]);
-
-        if(matcher.find()) {
-            //$1 -> matcher.group(1);
-            //$2 -> matcher.group(2);
-            //$3 -> matcher.group(3);
+        for (int i = 0; i < linha.length; i++) {
+            Pattern regex = Pattern.compile("(MOVE|move|ADD|add|SUB|sub|MPY|mpy|DIV|div) (\\w),(\\w)");
+            Matcher matcher = regex.matcher(linha[i]);
+            if(matcher.find()) {
+                if(i==0)
+                    if(matcher.group(1).toUpperCase() != "MOVE")
+                        return false;                           
+                        
+                 matriz_operacao[i][0]=matcher.group(1);
+                 matriz_operacao[i][1]=matcher.group(2);
+                 matriz_operacao[i][2]=matcher.group(3);
+            } else
+                return false;
         }
 
-        return false;
+        return true;
     }    
 }
+
