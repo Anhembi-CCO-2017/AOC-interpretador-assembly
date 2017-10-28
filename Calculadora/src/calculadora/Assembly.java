@@ -16,12 +16,13 @@ package calculadora;
  *              retorna false;
  */
 public class Assembly {
-
+    public String[][] matriz_operacao;
+    
     public Assembly() {
     }
 
-    public boolean isAssembly(valor) {
+    public boolean isAssembly(String valor) {
 
-    }
-    
+        return false;
+    }    
 }
