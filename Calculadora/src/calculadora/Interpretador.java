@@ -18,6 +18,7 @@ public class Interpretador {
         IdentificarExpressao op = new IdentificarExpressao();
         
         if (op.isAssembly(valor)) {
+            this.matriz_operacao = op.matriz_operacao;
             this.operacao = "eqc";
             return true;
         }else if (op.isEquacao(valor)) {

@@ -1,7 +1,8 @@
 package calculadora;
 
 public class IdentificarExpressao {
-
+    private String[][] matriz_operacao;
+    
     public IdentificarExpressao() {
     }
     
