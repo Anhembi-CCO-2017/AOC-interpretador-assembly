@@ -12,9 +12,9 @@ public class Equacao {
     
     public boolean isEquacao(String valor){
 
-        Pattern regex = Pattern.compile("[$&+,:;=?@#|]");
+        Pattern regex = Pattern.compile("[$&+,:;=?!@#|]");
         Matcher matcher = regex.matcher(valor);
-    
+        System.out.println(matcher.find());
         char[] vetor = {'/','*','+','-'};
         
         for (int i = 0; i < valor.length(); i++) 

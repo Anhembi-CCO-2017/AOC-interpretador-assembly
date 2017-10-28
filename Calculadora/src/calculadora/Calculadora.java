@@ -7,7 +7,7 @@ public class Calculadora {
 
         IdentificarExpressao ie = new IdentificarExpressao();
         
-        String num = "move add ";
+        String num = "! 9";
         
         System.out.println(ie.isEquacao(num));
         
