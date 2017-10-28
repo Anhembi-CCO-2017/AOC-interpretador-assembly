@@ -28,16 +28,16 @@ public class Assembly {
     }
 
     public boolean isAssembly(String valor) {
-
-        //Reconhecimento de pattern POR LINHA
-        Pattern pattern = Pattern.compile("(MOV|ADD|SUB|MPY|DIV) (\w),(\w)");
-        Matcher matcher = pattern.matcher(linha[i]);
-
-        if(matcher.find()) {
-            //$1 -> matcher.group(1);
-            //$2 -> matcher.group(2);
-            //$3 -> matcher.group(3);
-        }
+//
+//        //Reconhecimento de pattern POR LINHA
+////        Pattern pattern = Pattern.compile("(MOV|ADD|SUB|MPY|DIV) (\w),(\w)");
+////        Matcher matcher = pattern.matcher(linha[i]);
+//
+//        if(matcher.find()) {
+//            //$1 -> matcher.group(1);
+//            //$2 -> matcher.group(2);
+//            //$3 -> matcher.group(3);
+//        }
 
         return false;
     }    
