@@ -30,7 +30,7 @@ public class Assembly {
     public boolean isAssembly(String valor) {
 
         //Reconhecimento de pattern POR LINHA
-        Pattern pattern = Pattern.compile("(MOV|ADD|SUB|MPY|DIV) (\w),(\w)");
+        Pattern pattern = Pattern.compile("(MOVE|move|ADD|add|SUB|sub|MPY|mpy|DIV|div) (\\w),(\\w)");
         Matcher matcher = pattern.matcher(linha[i]);
 
         if(matcher.find()) {
@@ -40,5 +40,33 @@ public class Assembly {
         }
 
         return false;
-    }    
+    }
+
+    public String convertEquacao() {
+        int lines = this.matriz_operacao.length;
+
+        for (int i = 0; i < lines; i++) {
+            switch(this.matriz_operacao[i][0]) {
+                case "MOVE": {
+                    
+                }
+
+                case "ADD": {
+
+                }
+
+                case "SUB": {
+
+                }
+
+                case "MPY": {
+
+                }
+
+                case "DIV": {
+
+                }
+            }
+        }
+    }
 }
