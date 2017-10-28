@@ -77,11 +77,12 @@ public class Equacao {
     
     public String[][] splitEquation(String valor){
         String[][] name = new String[3][3];
+        System.out.println(valor);
         Pattern pattern = Pattern.compile("((\\d*\\.\\d+)|(\\d+)|([\\+\\-\\*/\\(\\)]))");
         Matcher m = pattern.matcher(valor);
         
         while (m.find()) {
-            System.out.printf("%s ", m.group());
+            System.out.printf("%s \n", m.group());
         }
         
         return name;
