@@ -10,7 +10,8 @@ package calculadora;
  * @author Matheus
  */
 public class IdentificarExpressao {
-
+    private String[][] matriz_operacao;
+    
     public IdentificarExpressao() {
     }
     
