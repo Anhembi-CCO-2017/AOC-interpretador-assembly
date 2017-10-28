@@ -1,6 +1,7 @@
 
 package calculadora;
 
+import com.sun.xml.internal.ws.util.StringUtils;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -83,7 +84,6 @@ public class Equacao {
                     return false;
                 }
             }
-            splitEquation(valor.replaceAll(" ",""));
             return true;
         }
         
@@ -91,18 +91,10 @@ public class Equacao {
         
         return false;
     }
-    
-    public String[][] splitEquation(String valor){
-        String[][] name = new String[3][3];
-        Pattern pattern = Pattern.compile("((\\d*\\.\\d+)|(\\d+)|([\\+\\-\\*/\\(\\)]))");
-        Matcher m = pattern.matcher(valor);
-        
-        while (m.find()) {
-            System.out.printf("%s ", m.group());
-        }
-        
-        return name;
-    }
+//    
+//    public String[][] splitEquation(){
+//        []
+//    }
     
     
 }

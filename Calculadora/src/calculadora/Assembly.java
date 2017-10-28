@@ -55,6 +55,34 @@ public class Assembly {
         }
 
         return true;
-    }    
+    }
+
+    public String convertEquacao() {
+        int lines = this.matriz_operacao.length;
+
+        for (int i = 0; i < lines; i++) {
+            switch(this.matriz_operacao[i][0]) {
+                case "MOVE": {
+                    
+                }
+
+                case "ADD": {
+
+                }
+
+                case "SUB": {
+
+                }
+
+                case "MPY": {
+
+                }
+
+                case "DIV": {
+
+                }
+            }
+        }
+    }
 }
 
