@@ -5,10 +5,13 @@ public class Calculadora {
 
     public static void main(String[] args) {
 
-        System.out.println("teste");
-
-        System.out.println("hfgasdgs");
-
+        IdentificarExpressao ie = new IdentificarExpressao();
+        
+        String num = "move add ";
+        
+        System.out.println(ie.isEquacao(num));
+        
+        
     }
     
 }
