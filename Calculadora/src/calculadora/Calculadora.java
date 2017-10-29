@@ -23,8 +23,7 @@ public class Calculadora {
             // abrindo dialogo
             JOptionPane.showMessageDialog(null, scrollPane);
 
-            core.valor_digitado = msg.getText();
-            
+            core.data = msg.getText();
         } while (core.identificarExpressao());
         // Validar a expressão        
         
