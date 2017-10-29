@@ -16,7 +16,7 @@ public class Interpretador {
         else if (this.isEquacao(this.data))
             return true;
 
-        Systegm.out.println("Operacao invalida");
+        System.out.println("Operacao invalida");
         return false;
     }
 
