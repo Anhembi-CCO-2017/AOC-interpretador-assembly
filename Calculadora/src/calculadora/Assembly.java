@@ -34,6 +34,7 @@ public class Assembly {
     public boolean isAssembly(String valor) {
         Pattern regex1 = Pattern.compile("[$&:;=?!@#|]");
         Matcher matcher1 = regex1.matcher(valor);
+        
         if(matcher1.find())
             return false;
         
@@ -43,6 +44,7 @@ public class Assembly {
         for (int i = 0; i < linha.length; i++) {
             Pattern regex = Pattern.compile("(MOVE|move|ADD|add|SUB|sub|MPY|mpy|DIV|div) (\\w),(\\w)");
             Matcher matcher = regex.matcher(linha[i]);
+            
             if(matcher.find()) {
                 if(i==0)
                     if(matcher.group(1).toUpperCase() != "MOVE")
@@ -60,7 +62,6 @@ public class Assembly {
         }
 
         return true;
-<<<<<<< HEAD
     }
 
     public String convert() {
@@ -92,8 +93,5 @@ public class Assembly {
 
         return "";
     }
-=======
-    }    
->>>>>>> d82b16e42ba0c524be839d8259fb321a1f48c15d
 }
 
