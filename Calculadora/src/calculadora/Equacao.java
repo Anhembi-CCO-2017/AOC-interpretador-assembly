@@ -1,7 +1,7 @@
 
 package calculadora;
 
-import com.sun.xml.internal.ws.util.StringUtils;
+import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -50,11 +50,6 @@ public class Equacao {
            }
         }
         
-        
-        
-        
-        
-        
         int qtdaberto=0;
         int qtdfechado=0;
         
@@ -84,17 +79,68 @@ public class Equacao {
                     return false;
                 }
             }
+            convert(valor);
             return true;
         }
-        
-        
-        
+
         return false;
     }
-//    
-//    public String[][] splitEquation(){
-//        []
-//    }
     
-    
+    public String convert(String valor){
+        String result = "";
+        System.out.println(valor);
+        String[] vars = {"x", "y", "t"};
+        Pattern p = Pattern.compile("\\(([^()]*)\\)");
+        Matcher m = p.matcher(valor);
+        if (m.find())
+            System.out.println(m.groupCount());
+        
+        
+        for (int i = 0; i < valor.length(); i++) {
+            
+            switch(valor.charAt(i)){
+                
+                case '(':
+                    if(i == 0){
+                        result += "MOVE ";
+                    }
+                    break;
+                case ')':
+                    break;
+                    
+                case '+':
+                    result += "ADD ";
+                    
+                    break;
+                case '-':
+                    result += "SUB ";
+
+                    break;
+                case '/':
+                    result += "DIV ";
+                    break;
+                case '*':
+                    result += "MPY ";
+                    break;
+                default:
+                    if (i == 0) {
+                        result += "MOVE "+ vars[0] + ", " +valor.charAt(i)+"\n";
+                    }else {
+                        result += valor.charAt(i) + "\n";
+                    }
+                    
+            }
+        }
+        System.out.println(result);
+        
+        return result;
+    }
+   
+    //Gera letras do alfabeto aleatórias
+    public char rndChar () {
+        
+        int rnd = (int) (Math.random() * 52);
+        char base = (rnd < 26) ? 'A' : 'a';
+        return (char) (base + rnd % 26);
+    }
 }

@@ -47,18 +47,20 @@ public class Assembly {
                 if(i==0)
                     if(matcher.group(1).toUpperCase() != "MOVE")
                         return false;                           
-                        
+
                 if(matcher.group(2).toUpperCase().equals(matcher.group(3).toUpperCase()))
                     return false;
                  
                 matriz_operacao[i][0]=matcher.group(1).toUpperCase();
                 matriz_operacao[i][1]=matcher.group(2).toUpperCase();
                 matriz_operacao[i][2]=matcher.group(3).toUpperCase();
+
             } else
                 return false;
         }
 
         return true;
+<<<<<<< HEAD
     }
 
     public String convert() {
@@ -90,5 +92,8 @@ public class Assembly {
 
         return "";
     }
+=======
+    }    
+>>>>>>> d82b16e42ba0c524be839d8259fb321a1f48c15d
 }
 
