@@ -3,6 +3,7 @@ package calculadora;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /* v1: /(MOV|ADD|SUB|MPY|DIV) (\w),(\w)/g  $1 $2 != $3
  * REGEX DE VALIDAÇÃO
@@ -26,7 +27,7 @@ import java.util.ArrayList;
         return false;
  */
 public class Assembly {
-    public String[][] matriz_operacao;
+    public ArrayList< ArrayList > matriz_operacao = new ArrayList< ArrayList>();
     
     public Assembly() {
     }
@@ -34,7 +35,7 @@ public class Assembly {
     public boolean isAssembly(String valor) {
         Pattern regex1 = Pattern.compile("[$&:;=?!@#|]");
         Matcher matcher1 = regex1.matcher(valor);
-        
+
         if(matcher1.find())
             return false;
         
@@ -44,19 +45,22 @@ public class Assembly {
         for (int i = 0; i < linha.length; i++) {
             Pattern regex = Pattern.compile("(MOVE|move|ADD|add|SUB|sub|MPY|mpy|DIV|div) (\\w),(\\w)");
             Matcher matcher = regex.matcher(linha[i]);
-            
+
             if(matcher.find()) {
                 if(i==0)
-                    if(matcher.group(1).toUpperCase() != "MOVE")
-                        return false;                           
+                    if(!matcher.group(1).toUpperCase().equals("MOVE"))
+                        return false;
 
                 if(matcher.group(2).toUpperCase().equals(matcher.group(3).toUpperCase()))
                     return false;
-                 
-                matriz_operacao[i][0]=matcher.group(1).toUpperCase();
-                matriz_operacao[i][1]=matcher.group(2).toUpperCase();
-                matriz_operacao[i][2]=matcher.group(3).toUpperCase();
 
+                ArrayList< String > data = new ArrayList< String >();
+
+                data.add(matcher.group(1).toUpperCase());
+                data.add(matcher.group(2).toUpperCase());
+                data.add(matcher.group(3).toUpperCase());
+
+                matriz_operacao.add(data);
             } else
                 return false;
         }
@@ -64,34 +68,87 @@ public class Assembly {
         return true;
     }
 
-    public String convert() {
+    public void convert() {
         /*
          * Checar os Registrador
          */
-        int lines = this.matriz_operacao.length;
+        int lines = matriz_operacao.size();
 
         //String to store data constructor
         ArrayList<String> group = new ArrayList();
+
+        for (int i = 0; i < lines; i++) {
+            ArrayList<String> data = matriz_operacao.get(i);
+            
+            if(!group.contains(data.get(1)))
+                if(data.get(0).equals("MOVE"))
+                    group.add(data.get(1));
+                else {
+                    System.out.println("BREAK CODE ON LINE: "+i);
+                    return;
+                }
+        }
+
         //String to assing Register to Group
-        ArrayList<String> data = new ArrayList();
-
-        //Interger to save index of Register on groups String Data
-        int asssing_index[] = null;
+        ArrayList<String> groupData = new ArrayList<>(group);
 
         for (int i = 0; i < lines; i++) {
-            if(!group.contains(matriz_operacao[i][1]))
-                if(matriz_operacao[i][0].equals("MOVE"))
-                    group.add(matriz_operacao[i][1]);
-                else
-                    return "BREAK CODE ON LINE: "+i;
+            ArrayList<String> data = matriz_operacao.get(i);
+            int groupIndex = group.indexOf(data.get(1));
+            int auxData = group.indexOf(data.get(2));
+            boolean needMerge = false;
+            boolean isMove = false;
+            char op = ' ';
+
+            if(auxData >= 0)
+                needMerge = true;
+
+            switch(data.get(0)) {
+                case "MOVE": {
+                    isMove = true;
+                    groupData.set(groupIndex, data.get(2));
+                    break;
+                }
+
+                case "ADD": {
+                    op = '+';
+                    break;
+                }
+
+                case "SUB": {
+                    op = '-';
+                    break;
+                }
+
+                case "DIV": {
+                    op = '/';
+                    break;
+                }
+
+                case "MPY": {
+                    op = '*';
+                    break;
+                }                
+            }
+
+            if(!isMove)
+                if(needMerge) {
+                    groupData.set(groupIndex, concat(groupData.get(groupIndex), op+" "+groupData.get(auxData)));
+                    groupData.remove(auxData);
+                    group.remove(auxData);
+                } else
+                    groupData.set(groupIndex, concat(groupData.get(groupIndex), op+" "+data.get(2)));
         }
 
-        for (int i = 0; i < lines; i++) {
-            int groupIndex = group.indexOf(matriz_operacao[i][1]);
-
+        int currentPos = 0;
+        for(String s : groupData) {
+            System.out.println(currentPos+": "+s);
+            currentPos++;
         }
+    }
 
-        return "";
+    private String concat(String atual, String data) {
+        return "("+atual+" "+data+")";
     }
 }
 

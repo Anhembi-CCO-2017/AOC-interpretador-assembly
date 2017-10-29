@@ -24,12 +24,10 @@ public class Calculadora {
             JOptionPane.showMessageDialog(null, scrollPane);
 
             core.data = msg.getText();
-        } while (core.identificarExpressao());
+        } while (!core.identificarExpressao());
         // Validar a expressão        
         
-        
-        
-        
+        core.build();
     }
     
 }
