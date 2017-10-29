@@ -3,30 +3,47 @@ package calculadora;
 
 public class Interpretador {
 
-    public String valor_digitado;
-    private String valor_convertido;
-    private String operacao;
-    private String[][] matriz_operacao;
+    private Assembly asy = new Assembly();
+    private Equacao eqc = new Equacao();
+    public String data;
     
-    public Interpretador() {
-    }
+    private int operacao = 0; //1 -> Assembly, 2 -> Equacao
+
+    public Interpretador() {}
     
-    public boolean identificarExpressao(){
-        IdentificarExpressao op = new IdentificarExpressao();
-        String valor = this.valor_digitado;
-        if (op.isAssembly(valor)) {
-            this.matriz_operacao = op.matriz_operacao;
-            this.operacao = "eqc";
-            System.out.println("ASS");
+    public boolean identificarExpressao() {
+        if (this.isAssembly(this.data))
             return true;
-        }else if (op.isEquacao(valor)) {
-            System.out.println("EQ");
-            this.operacao = "asy";
+        else if (this.isEquacao(this.data))
             return true;
-        }
+
         System.out.println("Operacao invalida");
         return false;
     }
+
+    public void build() {
+        if(this.operacao == 1)
+            asy.convert();
+        else if(this.operacao == 2)
+            eqc.convert();
+    }
     
+    private boolean isAssembly(String valor) {
+        if(asy.isAssembly(valor)) {
+            this.operacao = 1;
+            return true;
+        }
+        
+        return false;
+    }
+
+    private boolean isEquacao(String valor) {        
+        if (eqc.isEquacao(valor)) {
+            this.operacao = 2;
+            return true;
+        }
+
+        return false;
+    }
     
 }
