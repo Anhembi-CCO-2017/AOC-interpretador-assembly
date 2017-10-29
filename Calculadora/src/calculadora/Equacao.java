@@ -212,6 +212,7 @@ public class Equacao {
                             ArrayList< String > operator3 = new ArrayList< String >();
 
                             operator3.add(getOperation((String) pastData.get(1)));
+                            System.out.println(getOperation((String) pastData.get(1)));
                             operator3.add(""+registers[regCounter]);
                             operator3.add((String) pastData.get(2));
 
@@ -226,29 +227,26 @@ public class Equacao {
 
             //LINHA VAZIA, COM FINAL VAZIO
             if(data.get(0).equals("") && data.get(2).equals("")) {
-                String lastRegister = ""+registers[regCounter-1];
-
                 ArrayList< String > operator = new ArrayList< String >();
                 operator.add(getOperation((String) data.get(1)));
-                operator.add(lastRegister);
                 operator.add("");
+                operator.add(""+registers[regCounter]);
                 
                 machine_code.add(operator);
             }
         }
-
+        
         //VERIFICAÇÃO DE MERGE
         for(int index = 0; index < machine_code.size(); index++) {
             ArrayList data = machine_code.get(index);
 
-            if(data.get(2).equals(""))
+            if(data.get(1).equals(""))
             {
-                ArrayList nextData = machine_code.get(index+1);
                 ArrayList< String > newData = new ArrayList< String >();
 
                 newData.add((String)data.get(0));
-                newData.add((String)data.get(1));
-                newData.add((String)nextData.get(1));
+                newData.add(""+registers[0]);
+                newData.add((String)data.get(2));
 
                 machine_code.add(newData);
                 machine_code.remove(index);

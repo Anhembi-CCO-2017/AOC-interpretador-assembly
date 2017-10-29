@@ -7,6 +7,7 @@ import javax.swing.JTextArea;
 public class Calculadora {
     
     public static void main(String[] args) {
+        /*
         Interpretador core = new Interpretador();
         
         do {
@@ -28,9 +29,9 @@ public class Calculadora {
         // Validar a expressão        
         
         core.build();
-
+        */
         
-        /*
+        
         String[] v = {"(((a+b)*c)-(a*d))/(a*b)", "(a*b/d)+e", "(f*b)/a", "b - c", "d*(e+(c-d)) - b", "(a/e)*a*c", "(d+b+a+c)/(f*e)"};
         
         for(String i : v) {
@@ -40,7 +41,7 @@ public class Calculadora {
             core.build();
             System.out.println("\n\n");
         }
-        */
+        
     }
     
 }
