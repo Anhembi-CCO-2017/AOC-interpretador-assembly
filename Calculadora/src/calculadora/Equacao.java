@@ -6,13 +6,13 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Equacao {
-
+    private String valor;
     public Equacao() {
     }
     
     
     public boolean isEquacao(String valor){
-
+        this.valor = valor;
         char[] vetor = {'/','*','+','-'};
         Pattern regex = Pattern.compile("[$&,\\:;=?!@#|]");
         Matcher matcher = regex.matcher(valor);
@@ -79,23 +79,28 @@ public class Equacao {
                     return false;
                 }
             }
-            convert(valor);
+            convert();
             return true;
         }
 
         return false;
     }
     
-    public String convert(String valor){
+    public String convert(){
         String result = "";
         System.out.println(valor);
         String[] vars = {"x", "y", "t"};
-        Pattern p = Pattern.compile("\\(([^()]*)\\)");
+        Pattern p = Pattern.compile("\\(([^()]*)\\)((\\\\d*\\\\.\\\\d+)|(\\\\d+)|([\\\\+\\\\-\\\\*/\\\\(\\\\)]))");
         Matcher m = p.matcher(valor);
-        if (m.find())
-            System.out.println(m.groupCount());
-        
-        
+
+        System.out.println(m.groupCount());
+        if(m.find()){
+            for (int i = 0; i < m.groupCount(); i++) {
+                System.out.println(m.group(i));
+            }
+       
+        }
+
         for (int i = 0; i < valor.length(); i++) {
             
             switch(valor.charAt(i)){
