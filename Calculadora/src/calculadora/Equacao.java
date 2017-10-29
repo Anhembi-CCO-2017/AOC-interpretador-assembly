@@ -50,11 +50,6 @@ public class Equacao {
            }
         }
         
-        
-        
-        
-        
-        
         int qtdaberto=0;
         int qtdfechado=0;
         
@@ -84,18 +79,23 @@ public class Equacao {
                     return false;
                 }
             }
-            splitEquation(valor);
+            convert(valor);
             return true;
         }
-        
-        
-        
+
         return false;
     }
     
-    public String splitEquation(String valor){
-        String result = ""; 
- 
+    public String convert(String valor){
+        String result = "";
+        System.out.println(valor);
+        String[] vars = {"x", "y", "t"};
+        Pattern p = Pattern.compile("\\(([^()]*)\\)");
+        Matcher m = p.matcher(valor);
+        if (m.find())
+            System.out.println(m.groupCount());
+        
+        
         for (int i = 0; i < valor.length(); i++) {
             
             switch(valor.charAt(i)){
@@ -106,11 +106,11 @@ public class Equacao {
                     }
                     break;
                 case ')':
-                    result += "MOVE ";
                     break;
                     
                 case '+':
                     result += "ADD ";
+                    
                     break;
                 case '-':
                     result += "SUB ";
@@ -124,7 +124,7 @@ public class Equacao {
                     break;
                 default:
                     if (i == 0) {
-                        result += "MOVE "+valor.charAt(i)+"\n";
+                        result += "MOVE "+ vars[0] + ", " +valor.charAt(i)+"\n";
                     }else {
                         result += valor.charAt(i) + "\n";
                     }
