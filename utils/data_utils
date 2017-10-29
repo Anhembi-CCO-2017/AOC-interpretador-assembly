@@ -1,0 +1,145 @@
+[d, *, ]
+[e, +, ]
+[c, -, d]
+[, -, b]
+
+
+MOVE    N, a
+ADD     N, b
+MPY     N, c
+MOVE    O, a
+MPY     O, d
+MOVE    P, a
+MPY     P, b
+SUB     N, O
+DIV     N, P
+
+MOVE    N, a
+ADD     N, b
+MPY     N, c
+MOVE    O, a
+MPY     O, d
+MOVE    P, a
+MPY     P, b
+SUB     N, O
+DIV     O, P
+
+MOVE    N, a
+ADD     N, b
+MPY     N, c
+SUB     O 
+MOVE    O, a
+MPY     O, d
+DIV     P 
+MOVE    P, a
+MPY     P, b
+
+MOVE    N,a
+ADD     N,b
+MPY     N,c
+SUB      ,O
+MOVE    O,a
+MPY     O,d
+DIV      ,P
+MOVE    P,a
+MPY     P,b
+
+MOVE    N,a
+ADD     N,b
+MPY     N,c
+MOVE    O,a
+MPY     O,d
+MOVE    P,a
+MPY     P,b
+SUB      ,O
+DIV      ,P
+
+
+(((a+b)*c)-(a*d))/(a*b)
+MOVE N,a
+ADD N,b
+MPY N,c
+MOVE O,a
+MPY O,d
+MOVE P,a
+MPY P,b
+SUB N,O
+DIV N,P
+
+
+
+(a*b/d)+e
+MOVE N,a
+MPY N,b
+DIV N,d
+ADD N,e
+
+
+
+(f*b)/a
+MOVE N,f
+MPY N,b
+DIV N,a
+
+
+
+b-c
+MOVE N,b
+SUB N,c
+
+
+
+d*(e+(c-d))-b
+MOVE N,c
+SUB N,d
+ADD N,e
+MPY N,d
+SUB N,b
+
+
+
+(a/e)*a*c
+MOVE N,a
+DIV N,e
+MPY N,a
+MPY N,c
+
+
+
+(d+b+a+c)/(f*e)
+MOVE N,d
+ADD N,b
+ADD N,a
+ADD N,c
+MOVE O,f
+MPY O,e
+DIV N,O
+
+(((H + I) * J) + ((K + L) * M))
+
+MOVE A,H
+ADD A,I
+MPY A,J
+MOVE B,K
+ADD B,L
+MPY B,M
+ADD A,B
+
+
+
+
+(((D + L) * L) + (((H + I) * J) + ((K + L) * M)))
+
+MOVE A,H
+ADD A,I
+MPY A,J
+MOVE B,K
+ADD B,L
+MPY B,M
+ADD A,B
+MOVE G,D
+ADD G,L
+MPY G,L
+ADD G,A
+
+

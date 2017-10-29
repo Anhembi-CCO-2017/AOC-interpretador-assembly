@@ -15,7 +15,7 @@ public class Equacao {
     
     
     public boolean isEquacao(String valor){
-        this.valor = valor.replaceAll(" ", "");
+        this.valor = valor.replaceAll(" ", "").toUpperCase();
         char[] vetor = {'/','*','+','-'};
         Pattern regex = Pattern.compile("[$&,\\:;=?!@#|]");
         Matcher matcher = regex.matcher(valor);
@@ -23,23 +23,22 @@ public class Equacao {
         Pattern regex1 = Pattern.compile("[/*+-]");
         Matcher matcher1 = regex1.matcher(valor);
         
-        Pattern regex2 = Pattern.compile("[a-zA-Z]");
+        Pattern regex2 = Pattern.compile("[npoqrstuvwxyzNPOPQRSTUVWXYZ]");
         Matcher matcher3 = regex2.matcher(valor);
         
         // numeros de 0-9
         Pattern regex3 = Pattern.compile("[0-9]");
         Matcher matcher4 = regex3.matcher(valor);
-        
+
         // identificar se tem caracteres especias
         if (matcher.find()) {
             return false;
         }
         
-        //saber se tem mescla de numeros e letras
-        if(matcher3.find()){
-            if (matcher4.find()) {
-                return false;
-            }
+        //saber se tem mescla de numeros
+        if(matcher3.find() || matcher4.find()){
+            return false;
+
         }
         
         
@@ -140,31 +139,24 @@ public class Equacao {
         ArrayList< ArrayList > machine_code = new ArrayList< ArrayList>();
         ArrayList< ArrayList > dataClone = new ArrayList< ArrayList>(matriz_operacao);
         
-        System.out.println(valor);
-
-        //while(dataClone.size())
         for(int index = 0; index < dataClone.size(); index++) {
             ArrayList data = dataClone.get(index);
 
             //LINHA COMPLETA (FAZER MOV)
             if(!data.get(0).equals("") && !data.get(2).equals("")) {
-                //if(index == 0) {
-                    ArrayList< String > operator = new ArrayList< String >();
-                    operator.add("MOVE");
-                    operator.add(""+registers[regCounter]);
-                    operator.add((String) data.get(0));
+                ArrayList< String > operator = new ArrayList< String >();
+                operator.add("MOVE");
+                operator.add(""+registers[regCounter]);
+                operator.add((String) data.get(0));
+                machine_code.add(operator);
 
-                    ArrayList< String > operator2 = new ArrayList< String >();
-                    operator2.add(getOperation((String) data.get(1)));
-                    operator2.add(""+registers[regCounter]);
-                    operator2.add((String) data.get(2));
-
-                    regCounter++;
-
-                    machine_code.add(operator);
-                    machine_code.add(operator2);
-                    //dataClone.remove(dataCloneIndex);
-                //}
+                ArrayList< String > operator2 = new ArrayList< String >();
+                operator2.add(getOperation((String) data.get(1)));
+                operator2.add(""+registers[regCounter]);
+                operator2.add((String) data.get(2));
+                machine_code.add(operator2);
+                
+                regCounter++;
             }
 
             //LINHA POS VAZIA, COM POS FINAL COMPLETA
@@ -176,51 +168,44 @@ public class Equacao {
                 operator.add(getOperation((String) data.get(1)));
                 operator.add(register);
                 operator.add((String) data.get(2));
-
                 machine_code.add(operator);
-                //dataClone.remove(dataCloneIndex);
             }
 
             //LINHA PRENCHIDA, COM FINAL VAZIO
             if(!data.get(0).equals("") && data.get(2).equals("")) {
-                int increment = 1;
-                boolean check = false;
+                boolean findNext = false;
+                int internalIndex = 0;
 
-                while(!check) {
-                    ArrayList nextData = dataClone.get(index+increment);
+                while(!findNext) {
+                    ArrayList<String> internalIndexData = dataClone.get(index+internalIndex);
 
-                    if(!nextData.get(0).equals("") && nextData.get(2).equals("")) {
-                        increment++;
-                    } else if(!nextData.get(0).equals("") && !nextData.get(2).equals("")) {
-                        //move data to up
-
+                    if(!internalIndexData.get(0).equals("") && internalIndexData.get(2).equals("")) {
+                        internalIndex++;
+                    } else if(!internalIndexData.get(0).equals("") && !internalIndexData.get(2).equals("")) {
                         ArrayList< String > operator = new ArrayList< String >();
                         operator.add("MOVE");
                         operator.add(""+registers[regCounter]);
-                        operator.add((String) nextData.get(0));
+                        operator.add((String) internalIndexData.get(0));
+                        machine_code.add(operator);
 
                         ArrayList< String > operator2 = new ArrayList< String >();
-                        operator2.add(getOperation((String) nextData.get(1)));
+                        operator2.add(getOperation((String) internalIndexData.get(1)));
                         operator2.add(""+registers[regCounter]);
-                        operator2.add((String) nextData.get(2));
-
-                        machine_code.add(operator);
+                        operator2.add((String) internalIndexData.get(2));
                         machine_code.add(operator2);
 
-                        for(int i = 0; i < increment; i++) {
-                            ArrayList pastData = dataClone.get(index+i);
+                        for (int i = internalIndex-1; i >= index; i--) {
+                            ArrayList<String> roolbackData = dataClone.get(i);
+
                             ArrayList< String > operator3 = new ArrayList< String >();
-
-                            operator3.add(getOperation((String) pastData.get(1)));
-                            System.out.println(getOperation((String) pastData.get(1)));
+                            operator3.add(getOperation((String) roolbackData.get(1)));
                             operator3.add(""+registers[regCounter]);
-                            operator3.add((String) pastData.get(2));
-
+                            operator3.add((String) roolbackData.get(0));
                             machine_code.add(operator3);
                         }
 
-                        regCounter++;
-                        check = true;
+                        index = internalIndex;
+                        findNext = true;
                     }
                 }
             }
@@ -231,7 +216,6 @@ public class Equacao {
                 operator.add(getOperation((String) data.get(1)));
                 operator.add("");
                 operator.add(""+registers[regCounter]);
-                
                 machine_code.add(operator);
             }
         }
@@ -254,7 +238,7 @@ public class Equacao {
         }
 
         for(ArrayList code : machine_code)
-            System.out.println(Arrays.toString(code.toArray()));
+            System.out.println(code.get(0)+"\t"+code.get(1)+","+code.get(2));
     }
 
     private String getOperation(String op) {
@@ -270,68 +254,5 @@ public class Equacao {
         }
 
         return "";
-    }
-
-    public String convert2(){
-        String result = "";
-        System.out.println(valor);
-        String[] vars = {"x", "y", "t"};
-        Pattern p = Pattern.compile("\\(([^()]*)\\)((\\\\d*\\\\.\\\\d+)|(\\\\d+)|([\\\\+\\\\-\\\\*/\\\\(\\\\)]))");
-        Matcher m = p.matcher(valor);
-
-        System.out.println(m.groupCount());
-        if(m.find()){
-            for (int i = 0; i < m.groupCount(); i++) {
-                System.out.println(m.group(i));
-            }
-       
-        }
-
-        for (int i = 0; i < valor.length(); i++) {
-            
-            switch(valor.charAt(i)){
-                
-                case '(':
-                    if(i == 0){
-                        result += "MOVE ";
-                    }
-                    break;
-                case ')':
-                    break;
-                    
-                case '+':
-                    result += "ADD ";
-                    
-                    break;
-                case '-':
-                    result += "SUB ";
-
-                    break;
-                case '/':
-                    result += "DIV ";
-                    break;
-                case '*':
-                    result += "MPY ";
-                    break;
-                default:
-                    if (i == 0) {
-                        result += "MOVE "+ vars[0] + ", " +valor.charAt(i)+"\n";
-                    }else {
-                        result += valor.charAt(i) + "\n";
-                    }
-                    
-            }
-        }
-        System.out.println(result);
-        
-        return result;
-    }
-   
-    //Gera letras do alfabeto aleatórias
-    public char rndChar () {
-        
-        int rnd = (int) (Math.random() * 52);
-        char base = (rnd < 26) ? 'A' : 'a';
-        return (char) (base + rnd % 26);
     }
 }
