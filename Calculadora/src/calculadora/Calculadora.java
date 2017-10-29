@@ -11,7 +11,7 @@ public class Calculadora {
         
         do {
             // entrada de dados
-            JTextArea msg = new JTextArea("");
+            JTextArea msg = new JTextArea("(A+ B)- C/(D / E )");
             msg.setLineWrap(true); //quebrar linhas
             msg.setRows(10); //numero de linhas
             msg.setColumns(10); //numero de colunas
@@ -28,6 +28,19 @@ public class Calculadora {
         // Validar a expressão        
         
         core.build();
+
+        
+        /*
+        String[] v = {"(((a+b)*c)-(a*d))/(a*b)", "(a*b/d)+e", "(f*b)/a", "b - c", "d*(e+(c-d)) - b", "(a/e)*a*c", "(d+b+a+c)/(f*e)"};
+        
+        for(String i : v) {
+            Interpretador core = new Interpretador();
+            core.data = i;
+            core.identificarExpressao();
+            core.build();
+            System.out.println("\n\n");
+        }
+        */
     }
     
 }

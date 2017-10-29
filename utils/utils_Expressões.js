@@ -4,6 +4,13 @@
 (a*b/d)+e;
 (f*b)/a;
 b - c;
+
 d*(e+c) - b;
+
 (a/e)*a*c;
 (d+b+a+c)/(f*e);
+
+
+
+NOPQRSTUVWXYZ -> registrador
+ABCDEFGHIJKLM -> dado
