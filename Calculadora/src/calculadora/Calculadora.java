@@ -11,7 +11,7 @@ public class Calculadora {
         
         do {
             // entrada de dados
-            JTextArea msg = new JTextArea("Digite dados aqui.");
+            JTextArea msg = new JTextArea("( a* ( ( b*d ) / ( g*d ) / ( d* ( a/b ) ) ) )");
             msg.setLineWrap(true); //quebrar linhas
             msg.setRows(10); //numero de linhas
             msg.setColumns(10); //numero de colunas

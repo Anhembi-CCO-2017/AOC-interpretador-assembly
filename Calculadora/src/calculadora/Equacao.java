@@ -9,6 +9,8 @@ import java.util.regex.Pattern;
 public class Equacao {
     private String valor;
     public ArrayList< ArrayList > matriz_operacao = new ArrayList< ArrayList>();
+    public boolean debug = true;
+    
 
     public Equacao() {
     }
@@ -31,75 +33,58 @@ public class Equacao {
         Matcher matcher4 = regex3.matcher(valor);
 
         // identificar se tem caracteres especias
-        if (matcher.find()) {
-            return false;
-        }
+        if (matcher.find()) return false;
         
         //saber se tem mescla de numeros
-        if(matcher3.find() || matcher4.find()){
-            return false;
-
-        }
+        if(matcher3.find() || matcher4.find()) return false;        
         
-        
-        for (int i = 0; i < valor.length(); i++) {
-            for (int j = 0; j < vetor.length; j++) {
-                if (valor.charAt(i) == vetor[j]) {
+        for (int i = 0; i < valor.length(); i++)
+            for (int j = 0; j < vetor.length; j++)
+                if (valor.charAt(i) == vetor[j])
                     for (int k = 0; k < vetor.length; k++) 
                         if (valor.charAt(i+1) == vetor[k]) 
                             return false;
-            }
-           }
-        }
         
         int qtdaberto=0;
         int qtdfechado=0;
         
         //verifica se tem os mesmos numeros de parenteses!
         for (int i = 0; i < valor.length(); i++) {
-            
-            if (valor.charAt(i) == '(') {
-                
+            if (valor.charAt(i) == '(')
                 qtdaberto ++;
-            }
-            if (valor.charAt(i) == ')') {
-                
+        
+            if (valor.charAt(i) == ')')
                 qtdfechado ++;
-            }
         }
         
-        if (qtdaberto != qtdfechado) {
-            
-            return false;
-        }
+        if (qtdaberto != qtdfechado) return false;
         
         // checar se tem  tem formula
         if (matcher1.find()) {
             //saber se a formula é no final
-            for (int j = 0; j < vetor.length; j++){
-                if (valor.charAt(0) == vetor[j] || valor.charAt(valor.length() - 1) == vetor[j]){
-                    return false;
-                }
-            }
-            //convert();
+            for (int j = 0; j < vetor.length; j++)
+                if (valor.charAt(0) == vetor[j] || valor.charAt(valor.length() - 1) == vetor[j]) return false;
+
             return true;
         }
 
         return false;
     }
 
+    //( a* ( ( b*d ) / ( g*d ) / ( d* ( a/b ) ) ) )
     public void convert() {
         for (int index = 0; index < valor.length(); index++) {
-            if(valor.charAt(index) == '(' || valor.charAt(index) == ')')
+            if (valor.charAt(index) == '(' || valor.charAt(index) == ')')
                 continue;
 
-            if(matriz_operacao.size() == 0)
-                if(valor.charAt(index) == '+' || valor.charAt(index) == '-' || valor.charAt(index) == '/' || valor.charAt(index) == '*') {
+            if (matriz_operacao.size() == 0)
+                if (valor.charAt(index) == '+' || valor.charAt(index) == '-' || valor.charAt(index) == '/' || valor.charAt(index) == '*') {
                     ArrayList< String > data = new ArrayList< String >();
                     
                     data.add(""+valor.charAt(index-1));
                     data.add(""+valor.charAt(index));
-                    if(valor.charAt(index+1) == '(' || valor.charAt(index+1) == ')')
+
+                    if (valor.charAt(index+1) == '(' || valor.charAt(index+1) == ')')
                         data.add("");
                     else
                         data.add(""+valor.charAt(index+1));
@@ -110,37 +95,42 @@ public class Equacao {
                 }
 
             if(valor.charAt(index) == '+' || valor.charAt(index) == '-' || valor.charAt(index) == '/' || valor.charAt(index) == '*') {
-                    ArrayList< String > data = new ArrayList< String >();
-                    ArrayList< String > aux = matriz_operacao.get(matriz_operacao.size()-1);
+                ArrayList< String > data = new ArrayList< String >();
+                ArrayList< String > aux = matriz_operacao.get(matriz_operacao.size()-1);
 
-                    if(valor.charAt(index-1) == ')' || (aux.get(0).equals("") && !aux.get(2).equals("")) || (!aux.get(0).equals("") && !aux.get(2).equals("")))
-                        data.add("");
-                    else
-                        data.add(""+valor.charAt(index-1));
+                if(valor.charAt(index-1) == ')' || (aux.get(0).equals("") && !aux.get(2).equals("")) || (!aux.get(0).equals("") && !aux.get(2).equals("")))
+                    data.add("");
+                else
+                    data.add(""+valor.charAt(index-1));
 
-                    data.add(""+valor.charAt(index));
+                data.add(""+valor.charAt(index));
 
-                    if(valor.charAt(index+1) == '(' || valor.charAt(index+1) == ')')
-                        data.add("");
-                    else
-                        data.add(""+valor.charAt(index+1));
+                if(valor.charAt(index+1) == '(' || valor.charAt(index+1) == ')')
+                    data.add("");
+                else
+                    data.add(""+valor.charAt(index+1));
 
-                    matriz_operacao.add(data);
+                matriz_operacao.add(data);
 
-                    continue;
+                continue;
             }
         }
 
         // Variaveis
-        char[] registers = {'N','O','P','Q','R','S','T','U','V','W','X','Y','Z'};
+        char[] registers = {'N','O','P','Q','R','S','T','U','V','W','X','Y','Z','1','2','3','4','5','6','7','8','9','1','1','!','@','#','$','%'};
         int regCounter = 0;
 
         // Criando Linguagem de maquina.
         ArrayList< ArrayList > machine_code = new ArrayList< ArrayList>();
         ArrayList< ArrayList > dataClone = new ArrayList< ArrayList>(matriz_operacao);
         
+        if (debug) System.out.print("DEBUG: "+valor+"\n");
+        if (debug) System.out.print("DEBUG: MarizOP:\n>\t"+Arrays.toString(matriz_operacao.toArray())+"\n");
+        if (debug) System.out.print("DEBUG: DataClone:\n>\t"+Arrays.toString(dataClone.toArray())+"\n");
+
         for(int index = 0; index < dataClone.size(); index++) {
             ArrayList data = dataClone.get(index);
+            if (debug) System.out.print("DEBUG: "+registers[regCounter]+" <-> "+regCounter+"\t INDEX:"+index+"\n");
 
             //LINHA COMPLETA (FAZER MOV)
             if(!data.get(0).equals("") && !data.get(2).equals("")) {
@@ -157,6 +147,7 @@ public class Equacao {
                 machine_code.add(operator2);
                 
                 regCounter++;
+                //continue;
             }
 
             //LINHA POS VAZIA, COM POS FINAL COMPLETA
@@ -169,6 +160,8 @@ public class Equacao {
                 operator.add(register);
                 operator.add((String) data.get(2));
                 machine_code.add(operator);
+
+                //continue;
             }
 
             //LINHA PRENCHIDA, COM FINAL VAZIO
@@ -208,6 +201,8 @@ public class Equacao {
                         findNext = true;
                     }
                 }
+
+                //continue;
             }
 
             //LINHA VAZIA, COM FINAL VAZIO
@@ -217,8 +212,14 @@ public class Equacao {
                 operator.add("");
                 operator.add(""+registers[regCounter]);
                 machine_code.add(operator);
+                
+                //continue;
             }
+
+            if (debug) System.out.print("DEBUG: After operation over index ("+index+"):\n\t>>> "+Arrays.toString(matriz_operacao.toArray())+"\n\t>>> "+Arrays.toString(machine_code.toArray())+"\n\n\n");
         }
+
+        if (debug) System.out.print("DEBUG: Before MERGE CHECK:\n>\t"+Arrays.toString(matriz_operacao.toArray())+"\n");
         
         //VERIFICAÇÃO DE MERGE
         for(int index = 0; index < machine_code.size(); index++) {
