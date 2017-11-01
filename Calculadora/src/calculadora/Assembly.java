@@ -67,11 +67,13 @@ public class Assembly {
 
         //String to assing Register to Group
         ArrayList<String> groupData = new ArrayList<>(group);
+        //This is same of groupData but NEVER IS CHANGE;
+        ArrayList<String> groupStatic = new ArrayList<>(group);
 
         for (int i = 0; i < lines; i++) {
             ArrayList<String> data = matriz_operacao.get(i);
             int groupIndex = group.indexOf(data.get(1));
-            int auxData = group.indexOf(data.get(2));
+            int auxData = group.indexOf(data.get(2)); 
             boolean needMerge = false;
             boolean isMove = false;
             char op = ' ';
@@ -82,7 +84,8 @@ public class Assembly {
             switch(data.get(0)) {
                 case "MOVE": {
                     isMove = true;
-                    groupData.set(groupIndex, data.get(2));
+                    if(!needMerge) // CASE IF DATA IS ANOTHER REGISTER (THIS IS CORRECT ON END OF OP)
+                        groupData.set(groupIndex, data.get(2));
                     break;
                 }
 
@@ -114,8 +117,15 @@ public class Assembly {
                     group.remove(auxData);
                 } else
                     groupData.set(groupIndex, concat(groupData.get(groupIndex), op+" "+data.get(2)));
+            else if(needMerge) { // UTILIZADO NA VERIFICAÇÃO DE REGISTRADOR NA DATA DO MOVE
+                group.remove(auxData);
+            }
         }
 
+        for (int i = groupData.size()-1; i >= 0 ; i--)
+            if(groupStatic.indexOf(groupData.get(i)) >= 0)
+                groupData.remove(i);
+        
         int currentPos = 0;
         for(String s : groupData) {
             System.out.println(currentPos+": "+s);
