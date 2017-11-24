@@ -1,0 +1,103 @@
+==============================
+(a+b)
+>>>
+MOVE	N,A
+ADD	N,B
+==============================
+(a-b)
+>>>
+MOVE	N,A
+SUB	N,B
+==============================
+(a*b)
+>>>
+MOVE	N,A
+MPY	N,B
+==============================
+(a*b-c)
+>>>
+MOVE	N,A
+MPY	N,B
+SUB	N,C
+==============================
+(a/b/c)
+>>>
+MOVE	N,A
+DIV	N,B
+DIV	N,C
+==============================
+(a-(a*b))
+>>>
+MOVE	N,A
+MPY	N,B
+SUB	N,A
+==============================
+((a*b)-(a-c))
+>>>
+MOVE	N,A
+MPY	N,B
+MOVE	O,A
+SUB	O,C
+SUB	N,O
+==============================
+((a-b)/((a-a)*(a-b)))
+>>>
+MOVE	N,A
+SUB	N,B
+MOVE	O,A
+SUB	O,A
+MOVE	P,A
+SUB	P,B
+DIV	N,O
+MPY	N,P
+==============================
+(a*(a-b)*(a-c)/((d-e)/(b/e)))
+>>>
+MOVE	N,A
+SUB	N,B
+MPY	N,A
+MOVE	N,A
+SUB	N,C
+MOVE	O,D
+SUB	O,E
+MOVE	P,B
+DIV	P,E
+MPY	N,N
+DIV	N,O
+DIV	N,P
+==============================
+((g*m)-(d*c)+c-c)
+>>>
+MOVE	N,G
+MPY	N,M
+MOVE	O,D
+MPY	O,C
+ADD	O,C
+SUB	O,C
+SUB	N,O
+==============================
+((a*b*c)-((d/f)*(d/c)))
+>>>
+MOVE	N,A
+MPY	N,B
+MPY	N,C
+MOVE	O,D
+DIV	O,F
+MOVE	P,D
+DIV	P,C
+SUB	N,O
+MPY	N,P
+==============================
+(((D + L) * L) + (((H + I) * J) + ((K + L) * M)))
+>>>
+MOVE A,H
+ADD A,I
+MPY A,J
+MOVE B,K
+ADD B,L
+MPY B,M
+ADD A,B
+MOVE G,D
+ADD G,L
+MPY G,L
+ADD G,A

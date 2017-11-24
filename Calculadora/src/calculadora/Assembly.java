@@ -3,7 +3,6 @@ package calculadora;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Assembly {
     public ArrayList< ArrayList > matriz_operacao = new ArrayList< ArrayList>();
