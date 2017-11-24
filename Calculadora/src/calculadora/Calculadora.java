@@ -15,7 +15,7 @@ public class Calculadora {
             msg.setLineWrap(true); //quebrar linhas
             msg.setRows(30); //numero de linhas
             msg.setColumns(30); //numero de colunas
-            msg.setWrapStyleWord(true); // qubrar paçavras
+            msg.setWrapStyleWord(true); // qubrar palavras
 
             // adicionando scroll na entrada de dados
             JScrollPane scrollPane = new JScrollPane(msg);
